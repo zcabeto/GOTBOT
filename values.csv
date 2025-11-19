@@ -104,7 +104,7 @@
       "cavalry": 0,
       "archers": 0,
       "seige_weapons": 0,
-      "fleet": 0,
+      "fleet": 1,
       "war_galley": 0
     },
     "seals": [
@@ -125,7 +125,7 @@
     "army": {
       "men_at_arms": 0,
       "cavalry": 0,
-      "archers": 0,
+      "archers": 2,
       "seige_weapons": 0,
       "fleet": 1,
       "war_galley": 1
@@ -237,8 +237,9 @@
       "cavalry": 0,
       "archers": 0,
       "seige_weapons": 0,
-      "fleet": 0,
+      "fleet": 1,
       "war_galley": 0
     },
     "seals": []
   }
+}
