@@ -124,7 +124,6 @@ players=[
 ]
 
 info = Storage(players=players)
-#BASE_DIR = os.path.join(os.path.expanduser("~"), "Desktop", "Personal", "DND", "GoT-code")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(BASE_DIR,"resources.csv")) as file:
     for line in file.readlines():
