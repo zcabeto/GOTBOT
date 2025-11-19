@@ -4,7 +4,6 @@ from discord import app_commands, ui, Interaction
 import os
 import json
 import math
-raise Exception("FAIL")
 
 class Area:
     def __init__(self, name, food, wood, stone, steel, gold, population, port, fort, city):
@@ -167,7 +166,8 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
 @app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="spin-down")
 async def spin_down(interaction: discord.Interaction):
-    print(info.to_dict)
+    print(info.to_dict())
+    await interaction.response.send_message("✅ Check logs for printed info")
 
 @app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="players", description="Show player profiles")
@@ -464,6 +464,12 @@ class ArmyBuyView(ArmyView):
         self.confirm_button = ArmyBuyConfirmButton()
         self.add_item(self.confirm_button)
 
+class ArmyGiveView(ArmyView):
+    def __init__(self, player_name: str):
+        super().__init__(player_name)
+        self.confirm_button = ArmyGiveConfirmButton()
+        self.add_item(self.confirm_button)
+
 class ArmySellView(ArmyView):
     def __init__(self, player_name: str):
         super().__init__(player_name)
@@ -626,6 +632,21 @@ class ArmySellConfirmButton(ui.Button):
             ephemeral=False)
         self.disabled = True
 
+class ArmyGiveConfirmButton(ui.Button):
+    def __init__(self):
+        super().__init__(label="Confirm Gift", style=discord.ButtonStyle.success)
+
+    async def callback(self, interaction: Interaction):
+        view: ArmyGiveView = self.view
+        if not view.num_selected or not view.troop_selected:
+            await interaction.response.send_message("⚠️ Please select **both** the number of units and troop type before confirming.",ephemeral=True)
+            return
+        info.players[view.player_name].army[view.troop_selected] += view.num_selected
+        await interaction.response.send_message(
+            f"🛡️ **{view.player_name.title()}** gained **{view.num_selected} {view.troop_selected.title()}** units!",
+            ephemeral=False)
+        self.disabled = True
+
 @app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="armybuy", description="Purchase army resources.")
 @app_commands.describe(player_name="Which player is buying troops?")
@@ -659,6 +680,16 @@ async def armybuy(interaction: Interaction, player_name: str):
     store_info(info=info)
     await interaction.response.send_message(f"⚔️ **{player_name.title()}**, choose how many troops and what type to refund:",view=view,ephemeral=True)
 
+@app_commands.checks.has_role("BOT-Control")
+@bot.tree.command(name="armygive", description="Give army for free.")
+@app_commands.describe(player_name="Which player is refunding troops?")
+async def armybuy(interaction: Interaction, player_name: str):
+    if player_name not in info.players:
+        await interaction.response.send_message("❌ Invalid player name.", ephemeral=True)
+        return
+    view = ArmyGiveView(player_name)
+    store_info(info=info)
+    await interaction.response.send_message(f"⚔️ **{player_name.title()}**, choose how many troops and what type to give:",view=view,ephemeral=True)
 
 
 ## REDISTRICT AREAS ##
@@ -730,7 +761,7 @@ class RedistrictConfirmButton(ui.Button):
 @app_commands.describe(area_to="Which area is gaining a square?")
 async def redistrictarea(interaction: Interaction, area_from: str, area_to: str):
     area_choices = info.areas.copy()
-    area_choices["Unaligned"] = Area("Unaligned", math.inf,math.inf,math.inf,math.inf,math.inf,0,0,0,0)
+    area_choices["DM"] = Area("DM", math.inf,math.inf,math.inf,math.inf,math.inf,math.inf,math.inf,math.inf,math.inf)
     if area_from not in area_choices or area_to not in area_choices:
         await interaction.response.send_message("❌ Invalid area name.", ephemeral=True)
         return
