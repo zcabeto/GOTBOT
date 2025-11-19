@@ -164,12 +164,6 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
         raise error
 
 @app_commands.checks.has_role("BOT-Control")
-@bot.tree.command(name="spin-down")
-async def spin_down(interaction: discord.Interaction):
-    print(info.to_dict())
-    await interaction.response.send_message("✅ Check logs for printed info")
-
-@app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="players", description="Show player profiles")
 async def players_cmd(interaction: discord.Interaction):
     await interaction.response.send_message(f"Player profiles\n{list(info.players.keys())}")
