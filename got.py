@@ -165,6 +165,7 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
 @app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="players", description="Show player profiles")
 async def players_cmd(interaction: discord.Interaction):
+    retrieve_info(info=info)
     await interaction.response.send_message(f"Player profiles\n{list(info.players.keys())}")
 
 @bot.tree.command(name="resources", description="Show your current resources")
