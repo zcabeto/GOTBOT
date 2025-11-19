@@ -1,0 +1,243 @@
+{
+  "ADMIN": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": []
+  },
+  "flo": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "Tyrell",
+      "flo"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": [
+      "Tyrell"
+    ]
+  },
+  "rico": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "rico"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": [
+      "Targaryen"
+    ]
+  },
+  "toby": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "toby"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": []
+  },
+  "tom": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "Greyjoy",
+      "tom"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": [
+      "Greyjoy"
+    ]
+  },
+  "connor": {
+    "resources": {
+      "food": 2,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "connor"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": []
+  },
+  "callum": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "callum",
+      "Blackwood"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": []
+  },
+  "dom": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": []
+  },
+  "ethan": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "Dayne",
+      "ethan"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": [
+      "Dayne"
+    ]
+  },
+  "olive": {
+    "resources": {
+      "food": 0,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "Redwyne",
+      "olive"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": [
+      "Redwyne"
+    ]
+  },
+  "lucas": {
+    "resources": {
+      "food": 3,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 6
+    },
+    "areas": [
+      "lucas"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "seige_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": []
+  }
