@@ -20,7 +20,7 @@
   },
   "flo": {
     "resources": {
-      "food": 0,
+      "food": 4,
       "wood": 0,
       "stone": 0,
       "steel": 0,
@@ -28,7 +28,8 @@
     },
     "areas": [
       "Tyrell",
-      "flo"
+      "flo",
+      "Reach"
     ],
     "army": {
       "men_at_arms": 0,
@@ -57,9 +58,9 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "seige_weapons": 1,
       "fleet": 0,
-      "war_galley": 0
+      "war_galley": 1
     },
     "seals": [
       "Targaryen"
@@ -88,7 +89,7 @@
   },
   "tom": {
     "resources": {
-      "food": 0,
+      "food": 1,
       "wood": 0,
       "stone": 0,
       "steel": 0,
@@ -99,7 +100,7 @@
       "tom"
     ],
     "army": {
-      "men_at_arms": 0,
+      "men_at_arms": 1,
       "cavalry": 0,
       "archers": 0,
       "seige_weapons": 0,
@@ -126,22 +127,22 @@
       "cavalry": 0,
       "archers": 0,
       "seige_weapons": 0,
-      "fleet": 0,
-      "war_galley": 0
+      "fleet": 1,
+      "war_galley": 1
     },
     "seals": []
   },
   "callum": {
     "resources": {
-      "food": 0,
+      "food": 1,
       "wood": 0,
       "stone": 0,
       "steel": 0,
       "gold": 0
     },
     "areas": [
-      "callum",
-      "Blackwood"
+      "Blackwood",
+      "callum"
     ],
     "army": {
       "men_at_arms": 0,
@@ -174,18 +175,18 @@
   },
   "ethan": {
     "resources": {
-      "food": 0,
+      "food": 1,
       "wood": 0,
       "stone": 0,
       "steel": 0,
       "gold": 0
     },
     "areas": [
-      "Dayne",
-      "ethan"
+      "ethan",
+      "Dayne"
     ],
     "army": {
-      "men_at_arms": 0,
+      "men_at_arms": 1,
       "cavalry": 0,
       "archers": 0,
       "seige_weapons": 0,
@@ -198,7 +199,7 @@
   },
   "olive": {
     "resources": {
-      "food": 0,
+      "food": 1,
       "wood": 0,
       "stone": 0,
       "steel": 0,
@@ -212,9 +213,9 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "seige_weapons": 1,
       "fleet": 0,
-      "war_galley": 0
+      "war_galley": 2
     },
     "seals": [
       "Redwyne"
@@ -232,7 +233,7 @@
       "lucas"
     ],
     "army": {
-      "men_at_arms": 0,
+      "men_at_arms": 1,
       "cavalry": 0,
       "archers": 0,
       "seige_weapons": 0,
@@ -241,4 +242,3 @@
     },
     "seals": []
   }
-}
