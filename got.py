@@ -228,15 +228,10 @@ async def addarea(interaction: discord.Interaction, player_name: str, area_name:
     info.players[player_name].areas.add(area)
     previous_owner = area.owner
     message = f"✅ {player_name} has claimed the area **{area_name}**!"
-    if not (previous_owner is None or area_name != "City+" or area_name != "Marriage"):
+    if not (previous_owner is None):
         area.owner.areas.remove(area)
         message += f" It has been stolen from {previous_owner.name}!!"
-    if (area_name != "City+" or area_name != "Marriage"):
-        if type(area.owner)!=list: 
-            area.owner = [area.owner]
-        area.owner.append(info.players[player_name])
-    else:
-        area.owner = info.players[player_name]
+    area.owner = info.players[player_name]
     store_info(info=info)
     await interaction.response.send_message(message)
 
@@ -250,16 +245,10 @@ async def removearea(interaction: discord.Interaction, player_name: str, area_na
     if area_name not in info.areas:
         await interaction.response.send_message("❌ That area doesn't exist.")
         return
-    if (type(info.areas[area_name].owner)==Player) and info.areas[area_name].owner != info.players[player_name]:
+    if info.areas[area_name].owner != info.players[player_name]:
         await interaction.response.send_message("❌ That player does not seem to own that area.")
         return
-    if (type(info.areas[area_name].owner)==list) and not info.players[player_name] in info.areas[area_name].owner:
-        await interaction.response.send_message("❌ That player does not seem to own that area.")
-        return
-    if (type(info.areas[area_name].owner)==str):
-        info.areas[area_name].owner = None
-    elif (type(info.areas[area_name].owner)==list):
-        info.areas[area_name].owner = info.areas[area_name].owner.remove(info.players[player_name])
+    info.areas[area_name].owner = None
     info.players[player_name].areas.remove(info.areas[area_name])
     store_info(info=info)
     await interaction.response.send_message(f"✅ {player_name} has lost the area **{area_name}**!")
