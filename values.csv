@@ -12,7 +12,7 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 0,
       "war_galley": 0
     },
@@ -35,7 +35,7 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 0,
       "war_galley": 0
     },
@@ -58,7 +58,7 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 1,
+      "siege_weapons": 1,
       "fleet": 0,
       "war_galley": 1
     },
@@ -81,7 +81,7 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 0,
       "war_galley": 0
     },
@@ -103,7 +103,7 @@
       "men_at_arms": 1,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 1,
       "war_galley": 0
     },
@@ -126,7 +126,7 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 2,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 1,
       "war_galley": 1
     },
@@ -148,7 +148,7 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 0,
       "war_galley": 0
     },
@@ -167,7 +167,7 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 0,
       "war_galley": 0
     },
@@ -189,7 +189,7 @@
       "men_at_arms": 1,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 0,
       "war_galley": 0
     },
@@ -213,12 +213,13 @@
       "men_at_arms": 0,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 1,
+      "siege_weapons": 1,
       "fleet": 0,
       "war_galley": 2
     },
     "seals": [
-      "Redwyne"
+      "Redwyne",
+      "Martell"
     ]
   },
   "lucas": {
@@ -236,7 +237,7 @@
       "men_at_arms": 1,
       "cavalry": 0,
       "archers": 0,
-      "seige_weapons": 0,
+      "siege_weapons": 0,
       "fleet": 1,
       "war_galley": 0
     },
