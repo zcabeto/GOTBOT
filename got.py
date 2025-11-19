@@ -124,19 +124,20 @@ players=[
 ]
 
 info = Storage(players=players)
-directory = os.path.join(os.path.expanduser("~"), "Desktop", "Personal", "DND", "GoT-code")
-with open(os.path.join(directory,"resources.csv")) as file:
+#BASE_DIR = os.path.join(os.path.expanduser("~"), "Desktop", "Personal", "DND", "GoT-code")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(BASE_DIR,"resources.csv")) as file:
     for line in file.readlines():
         name,food,wood,stone,steel,gold,population,port,fort,city = line.split(",")
         info.areas[name] = Area(name,int(food),int(wood),int(stone),int(steel),int(gold),int(population),int(port),int(fort),int(city))
 
 def store_info(info: Storage):
-    filename = os.path.join(directory,"values.csv")
+    filename = os.path.join(BASE_DIR,"values.csv")
     with open(filename, "w") as f:
         json.dump(info.to_dict(), f, indent=2)
 
 def retrieve_info(info: Storage):
-    filename = os.path.join(directory,"values.csv")
+    filename = os.path.join(BASE_DIR,"values.csv")
     if not os.path.exists(filename):
         store_info(info)
     with open(filename, "r") as f:
@@ -161,6 +162,11 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
         await interaction.response.send_message("🚫 You don’t have permission to use this command.", ephemeral=True)
     else:
         raise error
+
+@app_commands.checks.has_role("BOT-Control")
+@bot.tree.command(name="spin-down")
+async def spin_down(interaction: discord.Interaction):
+    print(info.to_dict)
 
 @app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="players", description="Show player profiles")
