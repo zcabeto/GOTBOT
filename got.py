@@ -218,6 +218,7 @@ async def army_cmd(interaction: discord.Interaction, player_name: str | None = N
 @bot.tree.command(name="addarea", description="Claim an area")
 @app_commands.describe(area_name="The name of the area to claim")
 async def addarea(interaction: discord.Interaction, player_name: str, area_name: str):
+    area_name = area_name.capitalize()
     if player_name not in info.players:
         await interaction.response.send_message("❌ That is not a valid user, use /players to see them all.")
         return
@@ -239,6 +240,7 @@ async def addarea(interaction: discord.Interaction, player_name: str, area_name:
 @bot.tree.command(name="removearea", description="Lose an area to a non-player")
 @app_commands.describe(area_name="The name of the area to lose")
 async def removearea(interaction: discord.Interaction, player_name: str, area_name: str):
+    area_name = area_name.capitalize()
     if player_name not in info.players:
         await interaction.response.send_message("❌ That is not a valid user, use /players to see them all.")
         return
@@ -274,6 +276,7 @@ async def add_raven_seal(interaction: discord.Interaction, player_name: str, hou
         return
     player = info.players[player_name]
     player.seals.add(house_name)
+    store_info(info=info)
     await interaction.response.send_message(f"💮 {player_name.capitalize()} has been given the {house_name} seal!")
 
 @app_commands.checks.has_role("BOT-Control")
@@ -287,6 +290,7 @@ async def remove_raven_seal(interaction: discord.Interaction, player_name: str, 
         return
     player = info.players[player_name]
     player.seals.remove(house_name)
+    store_info(info=info)
     await interaction.response.send_message(f"💮 {player_name.capitalize()} has lost the {house_name} seal!")
 
 class RavenModal(ui.Modal, title="Compose Your Raven"):
@@ -565,6 +569,7 @@ class ArmyBuyConfirmButton(ui.Button):
             f"🛡️ **{view.player_name.title()}** purchased **{view.num_selected} {view.troop_selected.title()}** units!",
             ephemeral=False)
         self.disabled = True
+        store_info(info=info)
 
 class ArmyRefundConfirmButton(ui.Button):
     def __init__(self):
@@ -598,6 +603,7 @@ class ArmyRefundConfirmButton(ui.Button):
             f"🛡️ **{view.player_name.title()}** refunded **{view.num_selected} {view.troop_selected.title()}** units!",
             ephemeral=False)
         self.disabled = True
+        store_info(info=info)
 
 class ArmySellConfirmButton(ui.Button):
     def __init__(self):
@@ -613,6 +619,7 @@ class ArmySellConfirmButton(ui.Button):
             f"🛡️ **{view.player_name.title()}** sold **{view.num_selected} {view.troop_selected.title()}** units!",
             ephemeral=False)
         self.disabled = True
+        store_info(info=info)
 
 class ArmyGiveConfirmButton(ui.Button):
     def __init__(self):
@@ -628,6 +635,7 @@ class ArmyGiveConfirmButton(ui.Button):
             f"🛡️ **{view.player_name.title()}** gained **{view.num_selected} {view.troop_selected.title()}** units!",
             ephemeral=False)
         self.disabled = True
+        store_info(info=info)
 
 @app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="armybuy", description="Purchase army resources.")
@@ -736,6 +744,7 @@ class RedistrictConfirmButton(ui.Button):
             f"🔁 **{view.area_from.name.title()}** lost 1 **{view.resource} to {view.area_to.name.title()}**!",
             ephemeral=False)
         self.disabled = True
+        store_info(info=info)
 
 @app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="redistrictarea", description="Redistrict the areas")
@@ -748,58 +757,49 @@ async def redistrictarea(interaction: Interaction, area_from: str, area_to: str)
         await interaction.response.send_message("❌ Invalid area name.", ephemeral=True)
         return
     view = RedistrictView(area_choices[area_from], area_choices[area_to])
-    store_info(info=info)
     await interaction.response.send_message("Choose where resources are allocated from and to",view=view,ephemeral=True)
 
 exchange_rate = {"gold": 1, "food": 3, "steel": 3, "wood": 6, "stone": 6}
 @bot.tree.command(name="trade", description="Trade resources")
 @app_commands.describe(player_name="Name of player making trade.")
-@app_commands.describe(rate="Rate of trade.")
 @app_commands.describe(resource_from="Which resource is being sold?")
 @app_commands.describe(resource_to="Which resource is being bought?")
-async def trade(interaction: Interaction, player_name: str, rate: str, resource_from: str, resource_to: str):
+async def trade(interaction: Interaction, player_name: str, resource_from: str, resource_to: str):
     if player_name not in info.players:
         await interaction.response.send_message("❌ Invalid player name.", ephemeral=True)
         return
     player = info.players[player_name]
-    if rate.isnumeric():
-        if player_name == None:
-            player_name = username_to_name(interaction.user.name)
-        else:
-            if not any(role.name == "BOT-Control" for role in interaction.user.roles):
-                await interaction.response.send_message("🚫 You don’t have permission to use this command.", ephemeral=True)
-                return
-        if resource_to == "DM":   # take resources away
-            if player.resources[resource_from] < int(rate):
+    if "DM" in resource_to or "DM" in resource_from:
+        if not any(role.name == "BOT-Control" for role in interaction.user.roles):
+            await interaction.response.send_message("🚫 You don’t have permission to use this command.", ephemeral=True)
+            return
+        if "DM" in resource_to:   # take resources away
+            amount = int(resource_to[2:])
+            if player.resources[resource_from] < amount:
                 await interaction.response.send_message(f"❌ Not enough of {resource_from}.", ephemeral=True)
             else:
-                player.resources[resource_from] -= int(rate)
-                await interaction.response.send_message(f"🔁 **{player_name.title()}** lost {rate} {resource_from}.", ephemeral=True)
+                player.resources[resource_from] -= amount
+                await interaction.response.send_message(f"🔁 **{player_name.title()}** lost {amount} {resource_from}.", ephemeral=True)
             return
-        if resource_from == "DM":   # give resources for free
-            player.resources[resource_to] += int(rate)
-            await interaction.response.send_message(f"🔁 **{player_name.title()}** was given {rate} {resource_to}.", ephemeral=True)
+        if "DM" in resource_from:   # give resources for free
+            amount = int(resource_from[2:])
+            player.resources[resource_to] += amount
+            await interaction.response.send_message(f"🔁 **{player_name.title()}** was given {amount} {resource_to}.", ephemeral=True)
             return
     else:
-        if rate != "city" and rate != "port":
-            await interaction.response.send_message("❌ Invalid trade type.", ephemeral=True)
-            return
-        if rate == "city" and player.city() < 1:
-            await interaction.response.send_message("❌ This player does not own a city.", ephemeral=True)
-            return
-        if rate == "port" and player.port() < 1:
-            await interaction.response.send_message("❌ This player does not own a port.", ephemeral=True)
-            return
         resources_city = {"food", "wood", "stone", "steel", "gold"}
         resources_port = {"food", "wood", "stone"}
-        if resource_from not in resources_city or resource_to not in resources_city:
-            await interaction.response.send_message("❌ Invalid resource name.", ephemeral=True)
+        if player.city() < 1 and player.port() < 1:
+            await interaction.response.send_message("❌ This player does not own a city or port.", ephemeral=True)
             return
-        if rate == "port" and (resource_from not in resources_port or resource_to not in resources_port):
-            await interaction.response.send_message("❌ Cannot trade resource at port.", ephemeral=True)
+        elif player.city()<1 and (resource_from not in resources_port or resource_to not in resources_port):
+            await interaction.response.send_message("❌ Cannot trade this resource at port (only food, wood and stone).", ephemeral=True)
+            return
+        if resource_from not in resources_city or resource_to not in resources_city:
+            await interaction.response.send_message("❌ Invalid resource name (food,wood,stone,steel,gold).", ephemeral=True)
             return
         if player.resources[resource_from] < exchange_rate[resource_from]:
-            await interaction.response.send_message("❌ Not enough resources to trade.", ephemeral=True)
+            await interaction.response.send_message("❌ Not enough resources to make trade.", ephemeral=True)
             return
         player.resources[resource_to] += exchange_rate[resource_to]
         player.resources[resource_from] -= exchange_rate[resource_from]
