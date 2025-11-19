@@ -35,7 +35,7 @@ class Player:
     def __init__(self, name: str, username: str, channel: discord.TextChannel, raven_limit: int):
         self.name = name
         self.resources = {"food": 0, "wood": 0, "stone": 0, "steel": 0, "gold": 0}
-        self.army = {"men_at_arms": 0, "cavalry": 0, "archers": 0, "seige_weapons": 0, "fleet": 0, "war_galley": 0}
+        self.army = {"men_at_arms": 0, "cavalry": 0, "archers": 0, "siege_weapons": 0, "fleet": 0, "war_galley": 0}
         self.seals = set()
         self.areas = set()
         self.username = username
@@ -493,8 +493,8 @@ class ArmyTypeSelect(ui.Select):
             discord.SelectOption(label="Men at Arms", value="men_at_arms", description="Cost: 1 food"),
             discord.SelectOption(label="Archers", value="archers", description="Cost: 1 food, 1 wood"),
             discord.SelectOption(label="Cavalry", value="cavalry", description="Cost: 2 food, 1 steel"),
-            discord.SelectOption(label="Seige Weapons", value="seige_weapons", description="Cost: 10 wood, 10 stone, 5 steel"),
-            discord.SelectOption(label="Fleet of Shiips", value="fleet", description="Cost: 20 wood, 10 steel"),
+            discord.SelectOption(label="Siege Weapons", value="siege_weapons", description="Cost: 10 wood, 10 stone, 5 steel"),
+            discord.SelectOption(label="Fleet of Ships", value="fleet", description="Cost: 20 wood, 10 steel"),
             discord.SelectOption(label="War Galley", value="war_galley", description="Cost: 10 wood, 10 steel"),
         ]
         super().__init__(
@@ -543,7 +543,7 @@ class ArmyBuyConfirmButton(ui.Button):
             else:
                 await interaction.response.send_message("⚠️ Player lacks sufficient resources")
                 return
-        elif view.troop_selected == "seige_weapons":
+        elif view.troop_selected == "siege_weapons":
             if resources["steel"] >= view.num_selected*5 and resources["wood"] >= view.num_selected*10 and resources["stone"] >= view.num_selected*10:
                 resources["steel"]-= view.num_selected*5
                 resources["wood"]-= view.num_selected*10
@@ -590,7 +590,7 @@ class ArmyRefundConfirmButton(ui.Button):
         elif view.troop_selected == "cavalry":
             info.players[view.player_name].resources["food"]+=view.num_selected*2
             info.players[view.player_name].resources["steel"]+=view.num_selected
-        elif view.troop_selected == "seige_weapons":
+        elif view.troop_selected == "siege_weapons":
             info.players[view.player_name].resources["stone"]+=view.num_selected*10
             info.players[view.player_name].resources["wood"]+=view.num_selected*10
             info.players[view.player_name].resources["steel"]+=view.num_selected*5
