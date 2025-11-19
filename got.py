@@ -4,6 +4,7 @@ from discord import app_commands, ui, Interaction
 import os
 import json
 import math
+import FAIL_TO_RUN
 
 class Area:
     def __init__(self, name, food, wood, stone, steel, gold, population, port, fort, city):
