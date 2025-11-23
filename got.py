@@ -338,15 +338,18 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
                 await sender_destination.send(f"❌ You can only send a raven to ALL if no other ravens have been sent this week.\nYour message was:\n{message}")
                 return
             for name in info.players:
-                destination = interaction.client.get_channel(info.players[name].channel)
-                await destination.send(f"🪶 **Raven to {name.title()}, sealed with {seal}:**\n{message}")
+                if name != "ADMIN":
+                    destination = interaction.client.get_channel(info.players[name].channel)
+                    await destination.send(f"🪶 **Raven to {name.title()}, sealed with {seal}:**\n{message}")
+            player_sender.ravens_left = 0
         elif player_name in info.players:
             destination = interaction.client.get_channel(info.players[player_name].channel)
             await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal}:**\n{message}")
         destination = interaction.client.get_channel(DEFAULT_RAVEN)   # all ravens go to Charlie too
         await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal} (from {self.sender_name}):**\n{message}")
         sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
-        player_sender.ravens_left -= 1
+        if self.recipient != "Everyone":
+            player_sender.ravens_left -= 1
         await sender_destination.send(f"✅ Raven sent to {player_name.title()} (seal {seal}). You have {player_sender.ravens_left} Ravens left.\nYour message was:\n{message}")
 
 class RavenRecipientView(ui.View):
