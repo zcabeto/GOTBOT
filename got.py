@@ -87,7 +87,7 @@ class Storage:
                 "resources": player.resources,
                 "areas": [area.name for area in player.areas],
                 "army": player.army,
-                "seals": list(player.seals)
+                "seals": list(player.seals),
             } for player in self.players.values()
         }
     
@@ -333,7 +333,7 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
             await sender_destination.send(f"❌ You have send all your ravens this week.\nYour message was:\n{message}")
             return
         if self.recipient == "Everyone":
-            if player_sender.ravens_left != player_sender.raven_limit:
+            if player_sender.ravens_left != player_sender.raven_limit and player_sender.name != "ADMIN":
                 sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
                 await sender_destination.send(f"❌ You can only send a raven to ALL if no other ravens have been sent this week.\nYour message was:\n{message}")
                 return
@@ -428,6 +428,16 @@ async def raven(interaction: Interaction):
     players = list(info.players.keys())+["Choose NPC", "Everyone"]
     view = RavenRecipientView(players)
     await interaction.response.send_message(f"🪶 You have {player.ravens_left} Ravens remaining.\nChoose who you wish to send your raven to:",view=view,ephemeral=True)
+
+@bot.tree.command(name="raven_refund", description="Send a raven to another character.")
+@app_commands.describe(player_name="Which player is being refunded a Raven?")
+async def raven_refund(interaction: Interaction, player_name: str):
+    if player_name not in info.players:
+        await interaction.response.send_message("❌ Invalid player name.", ephemeral=True)
+        return
+    player = info.players[player_name]
+    player.ravens_left += 1
+    await interaction.response.send_message(f"🪶 {player_name.capitalize()} now up to {player.ravens_left} Ravens",ephemeral=True)
 
 
 ## BUY TROOPS ##
