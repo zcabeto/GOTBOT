@@ -341,7 +341,8 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
                 if name != "ADMIN":
                     destination = interaction.client.get_channel(info.players[name].channel)
                     await destination.send(f"🪶 **Raven to {name.title()}, sealed with {seal}:**\n{message}")
-            player_sender.ravens_left = 0
+            if player_sender.name != "ADMIN":
+                player_sender.ravens_left = 0
         elif player_name in info.players:
             destination = interaction.client.get_channel(info.players[player_name].channel)
             await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal}:**\n{message}")
