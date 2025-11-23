@@ -352,6 +352,7 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
         if self.recipient != "Everyone":
             player_sender.ravens_left -= 1
         await sender_destination.send(f"✅ Raven sent to {player_name.title()} (seal {seal}). You have {player_sender.ravens_left} Ravens left.\nYour message was:\n{message}")
+        print(f"Raven ({player_sender.name} -> {self.recipient}): {message}")
 
 class RavenRecipientView(ui.View):
     def __init__(self, players: list[str]):
