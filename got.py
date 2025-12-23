@@ -352,7 +352,8 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
         test_prefix = f"🪶 **Raven to {player_name.title()}, sealed with {seal} (from {self.sender_name}):**\n"
         if len(test_prefix + message) > 2000:
             sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
-            await sender_destination.send(f"❌ Your raven message is too long! The message with seal and formatting would be {len(test_prefix + message)} characters, but Discord only allows 2000.\n\nPlease shorten your message by at least {len(test_prefix + message) - 2000} characters and try again.\n\nYour message was:\n{message}")
+            return_message = f"❌ Your raven message is too long! The message with seal and formatting would be {len(test_prefix + message)} characters, but Discord only allows 2000.\n\nPlease shorten your message by at least {len(test_prefix + message) - 2000} characters and try again.\n\nYour message was:\n{message}"
+            await sender_destination.send(return_message[:1950]+"...")
             return
 
         if self.recipient == "Everyone":
