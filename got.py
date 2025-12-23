@@ -135,6 +135,13 @@ def store_info(info: Storage):
     with open(filename, "w") as f:
         json.dump(info.to_dict(), f, indent=2)
 
+def store_areas(info: Storage):
+    filename = os.path.join(BASE_DIR,"resources.csv")
+    with open(filename, "w") as f:
+        for area_name, area in info.areas.items():
+            line = f"{area.name},{area.growth['food']},{area.growth['wood']},{area.growth['stone']},{area.growth['steel']},{area.growth['gold']},{area.population},{area.port},{area.fort},{area.city}\n"
+            f.write(line)
+
 def retrieve_info(info: Storage):
     filename = os.path.join(BASE_DIR,"values.csv")
     if not os.path.exists(filename):
@@ -761,6 +768,7 @@ class RedistrictConfirmButton(ui.Button):
             ephemeral=False)
         self.disabled = True
         store_info(info=info)
+        store_areas(info=info)
 
 @app_commands.checks.has_role("BOT-Control")
 @bot.tree.command(name="redistrictarea", description="Redistrict the areas")
