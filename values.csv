@@ -17,30 +17,33 @@
       "war_galley": 0
     },
     "seals": [
-      "Tyrell",
-      "Tarth"
+      "Tully",
+      "Lannister",
+      "Tarth",
+      "Baratheon",
+      "Targaryen",
+      "Tyrell"
     ]
   },
   "flo": {
     "resources": {
-      "food": 4,
+      "food": 2,
       "wood": 0,
       "stone": 0,
-      "steel": 0,
+      "steel": 1,
       "gold": 0
     },
     "areas": [
-      "Reach",
       "flo",
       "Tyrell"
     ],
     "army": {
-      "men_at_arms": 0,
+      "men_at_arms": 4,
       "cavalry": 0,
       "archers": 0,
       "siege_weapons": 0,
       "fleet": 0,
-      "war_galley": 0
+      "war_galley": 2
     },
     "seals": [
       "Tyrell"
@@ -48,22 +51,23 @@
   },
   "rico": {
     "resources": {
-      "food": 0,
-      "wood": 0,
+      "food": 6,
+      "wood": 1,
       "stone": 0,
       "steel": 0,
       "gold": 0
     },
     "areas": [
+      "Manderly",
       "rico"
     ],
     "army": {
-      "men_at_arms": 0,
-      "cavalry": 0,
-      "archers": 0,
+      "men_at_arms": 1,
+      "cavalry": 1,
+      "archers": 2,
       "siege_weapons": 1,
       "fleet": 0,
-      "war_galley": 1
+      "war_galley": 0
     },
     "seals": [
       "Targaryen"
@@ -75,7 +79,7 @@
       "wood": 0,
       "stone": 0,
       "steel": 0,
-      "gold": 0
+      "gold": 3
     },
     "areas": [
       "toby"
@@ -92,63 +96,15 @@
   },
   "tom": {
     "resources": {
-      "food": 2,
-      "wood": 0,
+      "food": 6,
+      "wood": 4,
       "stone": 0,
       "steel": 0,
-      "gold": 0
+      "gold": 3
     },
     "areas": [
       "tom",
       "Greyjoy"
-    ],
-    "army": {
-      "men_at_arms": 1,
-      "cavalry": 0,
-      "archers": 0,
-      "siege_weapons": 0,
-      "fleet": 1,
-      "war_galley": 0
-    },
-    "seals": [
-      "Greyjoy"
-    ]
-  },
-  "connor": {
-    "resources": {
-      "food": 3,
-      "wood": 1,
-      "stone": 0,
-      "steel": 0,
-      "gold": 0
-    },
-    "areas": [
-      "connor"
-    ],
-    "army": {
-      "men_at_arms": 1,
-      "cavalry": 0,
-      "archers": 1,
-      "siege_weapons": 0,
-      "fleet": 1,
-      "war_galley": 1
-    },
-    "seals": [
-      "Bravos",
-      "Tully"
-    ]
-  },
-  "callum": {
-    "resources": {
-      "food": 1,
-      "wood": 0,
-      "stone": 0,
-      "steel": 0,
-      "gold": 0
-    },
-    "areas": [
-      "callum",
-      "Blackwood"
     ],
     "army": {
       "men_at_arms": 0,
@@ -158,9 +114,59 @@
       "fleet": 0,
       "war_galley": 0
     },
-    "seals": []
+    "seals": [
+      "Greyjoy",
+      "Tully"
+    ]
   },
-  "lawrence": {
+  "connor": {
+    "resources": {
+      "food": 6,
+      "wood": 0,
+      "stone": 0,
+      "steel": 3,
+      "gold": 0
+    },
+    "areas": [
+      "connor"
+    ],
+    "army": {
+      "men_at_arms": 5,
+      "cavalry": 0,
+      "archers": 1,
+      "siege_weapons": 0,
+      "fleet": 1,
+      "war_galley": 2
+    },
+    "seals": [
+      "Bravos"
+    ]
+  },
+  "callum": {
+    "resources": {
+      "food": 6,
+      "wood": 0,
+      "stone": 0,
+      "steel": 0,
+      "gold": 0
+    },
+    "areas": [
+      "Blackwood",
+      "callum"
+    ],
+    "army": {
+      "men_at_arms": 0,
+      "cavalry": 0,
+      "archers": 0,
+      "siege_weapons": 0,
+      "fleet": 0,
+      "war_galley": 0
+    },
+    "seals": [
+      "Blackwood"
+    ]
+  },
+  "dom": {
     "resources": {
       "food": 0,
       "wood": 0,
@@ -181,18 +187,18 @@
   },
   "ethan": {
     "resources": {
-      "food": 1,
-      "wood": 0,
-      "stone": 0,
+      "food": 3,
+      "wood": 6,
+      "stone": 12,
       "steel": 0,
-      "gold": 0
+      "gold": 1
     },
     "areas": [
-      "Dayne",
-      "ethan"
+      "ethan",
+      "Dayne"
     ],
     "army": {
-      "men_at_arms": 1,
+      "men_at_arms": 2,
       "cavalry": 0,
       "archers": 0,
       "siege_weapons": 0,
@@ -209,11 +215,11 @@
       "wood": 0,
       "stone": 0,
       "steel": 0,
-      "gold": 0
+      "gold": 3
     },
     "areas": [
-      "Redwyne",
-      "olive"
+      "olive",
+      "Redwyne"
     ],
     "army": {
       "men_at_arms": 0,
@@ -221,32 +227,34 @@
       "archers": 0,
       "siege_weapons": 1,
       "fleet": 0,
-      "war_galley": 2
+      "war_galley": 0
     },
     "seals": [
-      "Martell",
-      "Redwyne"
+      "Redwyne",
+      "Martell"
     ]
   },
   "lucas": {
     "resources": {
-      "food": 4,
+      "food": 0,
       "wood": 0,
       "stone": 0,
       "steel": 0,
-      "gold": 6
+      "gold": 2
     },
     "areas": [
       "lucas"
     ],
     "army": {
       "men_at_arms": 1,
-      "cavalry": 0,
-      "archers": 0,
+      "cavalry": 1,
+      "archers": 1,
       "siege_weapons": 0,
       "fleet": 1,
       "war_galley": 0
     },
-    "seals": []
+    "seals": [
+      "Targaryen"
+    ]
   }
 }
