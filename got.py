@@ -347,6 +347,14 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
             sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
             await sender_destination.send(f"❌ You have send all your ravens this week.\nYour message was:\n{message}")
             return
+
+        # Check message length before sending
+        test_prefix = f"🪶 **Raven to {player_name.title()}, sealed with {seal} (from {self.sender_name}):**\n"
+        if len(test_prefix + message) > 2000:
+            sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
+            await sender_destination.send(f"❌ Your raven message is too long! The message with seal and formatting would be {len(test_prefix + message)} characters, but Discord only allows 2000.\n\nPlease shorten your message by at least {len(test_prefix + message) - 2000} characters and try again.\n\nYour message was:\n{message}")
+            return
+
         if self.recipient == "Everyone":
             if player_sender.ravens_left != player_sender.raven_limit and player_sender.name != "ADMIN":
                 sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
@@ -358,11 +366,7 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
                     try:
                         destination = interaction.client.get_channel(info.players[name].channel)
                         if destination is not None:
-                            msg_prefix = f"🪶 **Raven to {name.title()}, sealed with {seal}:**\n"
-                            if len(msg_prefix + message) > 2000:
-                                await destination.send(msg_prefix + message[:2000-len(msg_prefix)-20] + "\n\n[...truncated]")
-                            else:
-                                await destination.send(msg_prefix + message)
+                            await destination.send(f"🪶 **Raven to {name.title()}, sealed with {seal}:**\n{message}")
                         else:
                             failed_sends.append(name)
                             print(f"Warning: Could not find channel for {name}")
@@ -376,11 +380,7 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
             try:
                 destination = interaction.client.get_channel(info.players[player_name].channel)
                 if destination is not None:
-                    msg_prefix = f"🪶 **Raven to {player_name.title()}, sealed with {seal}:**\n"
-                    if len(msg_prefix + message) > 2000:
-                        await destination.send(msg_prefix + message[:2000-len(msg_prefix)-20] + "\n\n[...truncated]")
-                    else:
-                        await destination.send(msg_prefix + message)
+                    await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal}:**\n{message}")
                 else:
                     print(f"Warning: Could not find channel for {player_name}")
             except Exception as e:
@@ -391,19 +391,11 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
             log_raven(self.sender_name, player_name, seal, message)
         destination = interaction.client.get_channel(DEFAULT_RAVEN)   # all ravens go to Charlie too
         if destination is not None:
-            msg_prefix = f"🪶 **Raven to {player_name.title()}, sealed with {seal} (from {self.sender_name}):**\n"
-            if len(msg_prefix + message) > 2000:
-                await destination.send(msg_prefix + message[:2000-len(msg_prefix)-20] + "\n\n[...truncated]")
-            else:
-                await destination.send(msg_prefix + message)
+            await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal} (from {self.sender_name}):**\n{message}")
         sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
         if self.recipient != "Everyone":
             player_sender.ravens_left -= 1
-        confirm_msg = f"✅ Raven sent to {player_name.title()} (seal {seal}). You have {player_sender.ravens_left} Ravens left.\nYour message was:\n{message}"
-        if len(confirm_msg) > 2000:
-            await sender_destination.send(confirm_msg[:1997] + "...")
-        else:
-            await sender_destination.send(confirm_msg)
+        await sender_destination.send(f"✅ Raven sent to {player_name.title()} (seal {seal}). You have {player_sender.ravens_left} Ravens left.\nYour message was:\n{message}")
         print(f"Raven ({player_sender.name} -> {self.recipient}): {message}")
 
 class RavenRecipientView(ui.View):
