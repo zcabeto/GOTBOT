@@ -508,9 +508,9 @@ class ArmyTypeSelect(ui.Select):
             discord.SelectOption(label="Men at Arms", value="men_at_arms", description="Cost: 1 food"),
             discord.SelectOption(label="Archers", value="archers", description="Cost: 1 food, 1 wood"),
             discord.SelectOption(label="Cavalry", value="cavalry", description="Cost: 2 food, 1 steel"),
-            discord.SelectOption(label="Siege Weapons", value="siege_weapons", description="Cost: 10 wood, 10 stone, 5 steel"),
-            discord.SelectOption(label="Fleet of Ships", value="fleet", description="Cost: 20 wood, 10 steel"),
-            discord.SelectOption(label="War Galley", value="war_galley", description="Cost: 10 wood, 10 steel"),
+            discord.SelectOption(label="Siege Weapons", value="siege_weapons", description="Cost: 6 wood, 6 stone, 1 steel"),
+            discord.SelectOption(label="Fleet of Ships", value="fleet", description="Cost: 12 wood, 6 steel"),
+            discord.SelectOption(label="War Galley", value="war_galley", description="Cost: 6 wood, 6 steel"),
         ]
         super().__init__(
             placeholder="Choose which troop type...",
@@ -559,24 +559,24 @@ class ArmyBuyConfirmButton(ui.Button):
                 await interaction.response.send_message("⚠️ Player lacks sufficient resources")
                 return
         elif view.troop_selected == "siege_weapons":
-            if resources["steel"] >= view.num_selected*5 and resources["wood"] >= view.num_selected*10 and resources["stone"] >= view.num_selected*10:
-                resources["steel"]-= view.num_selected*5
-                resources["wood"]-= view.num_selected*10
-                resources["stone"]-= view.num_selected*10
+            if resources["steel"] >= view.num_selected*1 and resources["wood"] >= view.num_selected*6 and resources["stone"] >= view.num_selected*6:
+                resources["steel"]-= view.num_selected*1
+                resources["wood"]-= view.num_selected*6
+                resources["stone"]-= view.num_selected*6
             else:
                 await interaction.response.send_message("⚠️ Player lacks sufficient resources")
                 return
         elif view.troop_selected == "fleet":
-            if resources["steel"] >= view.num_selected*10 and resources["wood"] >= view.num_selected*20:
-                resources["steel"]-= view.num_selected*10
-                resources["wood"]-= view.num_selected*20
+            if resources["steel"] >= view.num_selected*6 and resources["wood"] >= view.num_selected*12:
+                resources["steel"]-= view.num_selected*6
+                resources["wood"]-= view.num_selected*12
             else:
                 await interaction.response.send_message("⚠️ Player lacks sufficient resources")
                 return
         elif view.troop_selected == "war_galley":
-            if resources["steel"] >= view.num_selected*10 and resources["wood"] >= view.num_selected*10:
-                resources["steel"]-= view.num_selected*10
-                resources["wood"]-= view.num_selected*10
+            if resources["steel"] >= view.num_selected*6 and resources["wood"] >= view.num_selected*6:
+                resources["steel"]-= view.num_selected*6
+                resources["wood"]-= view.num_selected*6
             else:
                 await interaction.response.send_message("⚠️ Player lacks sufficient resources")
                 return
@@ -606,15 +606,15 @@ class ArmyRefundConfirmButton(ui.Button):
             info.players[view.player_name].resources["food"]+=view.num_selected*2
             info.players[view.player_name].resources["steel"]+=view.num_selected
         elif view.troop_selected == "siege_weapons":
-            info.players[view.player_name].resources["stone"]+=view.num_selected*10
-            info.players[view.player_name].resources["wood"]+=view.num_selected*10
-            info.players[view.player_name].resources["steel"]+=view.num_selected*5
+            info.players[view.player_name].resources["stone"]+=view.num_selected*6
+            info.players[view.player_name].resources["wood"]+=view.num_selected*6
+            info.players[view.player_name].resources["steel"]+=view.num_selected*1
         elif view.troop_selected == "fleet":
-            info.players[view.player_name].resources["wood"]+=view.num_selected*20
-            info.players[view.player_name].resources["steel"]+=view.num_selected*10
+            info.players[view.player_name].resources["wood"]+=view.num_selected*12
+            info.players[view.player_name].resources["steel"]+=view.num_selected*6
         elif view.troop_selected == "war_galley":
-            info.players[view.player_name].resources["wood"]+=view.num_selected*10
-            info.players[view.player_name].resources["steel"]+=view.num_selected*10
+            info.players[view.player_name].resources["wood"]+=view.num_selected*6
+            info.players[view.player_name].resources["steel"]+=view.num_selected*6
         await interaction.response.send_message(
             f"🛡️ **{view.player_name.title()}** refunded **{view.num_selected} {view.troop_selected.title()}** units!",
             ephemeral=False)
