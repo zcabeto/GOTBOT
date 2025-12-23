@@ -335,7 +335,7 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
         seal = f"the **{self.seal.title()} seal**" if self.seal else "no seal"
         destination = None
         player_sender = info.players[username_to_name(interaction.user.name)]
-        if player_sender.ravens_left <= 0:
+        if player_sender.ravens_left <= 0 and player_sender.name != "ADMIN":
             sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
             await sender_destination.send(f"❌ You have send all your ravens this week.\nYour message was:\n{message}")
             return
@@ -344,17 +344,33 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
                 sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
                 await sender_destination.send(f"❌ You can only send a raven to ALL if no other ravens have been sent this week.\nYour message was:\n{message}")
                 return
+            failed_sends = []
             for name in info.players:
                 if name != "ADMIN":
-                    destination = interaction.client.get_channel(info.players[name].channel)
-                    await destination.send(f"🪶 **Raven to {name.title()}, sealed with {seal}:**\n{message}")
+                    try:
+                        destination = interaction.client.get_channel(info.players[name].channel)
+                        if destination is not None:
+                            await destination.send(f"🪶 **Raven to {name.title()}, sealed with {seal}:**\n{message}")
+                        else:
+                            failed_sends.append(name)
+                            print(f"Warning: Could not find channel for {name}")
+                    except Exception as e:
+                        failed_sends.append(name)
+                        print(f"Error sending everyone-raven to {name}: {e}")
             if player_sender.name != "ADMIN":
                 player_sender.ravens_left = 0
         elif player_name in info.players:
-            destination = interaction.client.get_channel(info.players[player_name].channel)
-            await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal}:**\n{message}")
+            try:
+                destination = interaction.client.get_channel(info.players[player_name].channel)
+                if destination is not None:
+                    await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal}:**\n{message}")
+                else:
+                    print(f"Warning: Could not find channel for {player_name}")
+            except Exception as e:
+                print(f"Error sending raven to {player_name}: {e}")
         destination = interaction.client.get_channel(DEFAULT_RAVEN)   # all ravens go to Charlie too
-        await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal} (from {self.sender_name}):**\n{message}")
+        if destination is not None:
+            await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal} (from {self.sender_name}):**\n{message}")
         sender_destination = interaction.client.get_channel(info.players[username_to_name(interaction.user.name)].channel)
         if self.recipient != "Everyone":
             player_sender.ravens_left -= 1
@@ -434,7 +450,7 @@ class RavenSealConfirmButton(ui.Button):
 async def raven(interaction: Interaction):
     player_name = username_to_name(interaction.user.name)
     player = info.players[player_name]
-    if player.ravens_left <= 0:
+    if player.ravens_left <= 0 and player.name != "ADMIN":
         await interaction.response.send_message("❌ You have no Ravens left this week :(", ephemeral=True)
         return
     players = list(info.players.keys())+["Choose NPC", "Everyone"]
