@@ -142,6 +142,14 @@ def store_areas(info: Storage):
             line = f"{area.name},{area.growth['food']},{area.growth['wood']},{area.growth['stone']},{area.growth['steel']},{area.growth['gold']},{area.population},{area.port},{area.fort},{area.city}\n"
             f.write(line)
 
+def log_raven(sender: str, recipient: str, seal: str, message: str):
+    filename = os.path.join(BASE_DIR,"ravens.txt")
+    with open(filename, "a") as f:
+        f.write(f"From: {sender} -> To: {recipient}\n")
+        f.write(f"Seal: {seal}\n")
+        f.write(f"Message: {message}\n")
+        f.write("\n\n")
+
 def retrieve_info(info: Storage):
     filename = os.path.join(BASE_DIR,"values.csv")
     if not os.path.exists(filename):
@@ -359,6 +367,7 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
                         print(f"Error sending everyone-raven to {name}: {e}")
             if player_sender.name != "ADMIN":
                 player_sender.ravens_left = 0
+            log_raven(self.sender_name, "Everyone", seal, message)
         elif player_name in info.players:
             try:
                 destination = interaction.client.get_channel(info.players[player_name].channel)
@@ -368,6 +377,10 @@ class RavenModal(ui.Modal, title="Compose Your Raven"):
                     print(f"Warning: Could not find channel for {player_name}")
             except Exception as e:
                 print(f"Error sending raven to {player_name}: {e}")
+            log_raven(self.sender_name, player_name, seal, message)
+        else:
+            # NPC raven
+            log_raven(self.sender_name, player_name, seal, message)
         destination = interaction.client.get_channel(DEFAULT_RAVEN)   # all ravens go to Charlie too
         if destination is not None:
             await destination.send(f"🪶 **Raven to {player_name.title()}, sealed with {seal} (from {self.sender_name}):**\n{message}")
